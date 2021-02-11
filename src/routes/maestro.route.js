@@ -10,7 +10,9 @@ const {
     createMaestro,
     deleteMaestro,
     updateMaestro,
-    updateEstatusMaestro
+    updateEstatusMaestro,
+    getEstudiantesByIdmaestro,
+    getTareasByIdmaestro
 } = require('../controllers/Maestro.controller');
 
 router.get('/maestros', getMaestros);
@@ -19,5 +21,8 @@ router.delete('/maestros/:id', deleteMaestro);
 router.post('/maestros', createMaestro);
 router.put('/maestros/:id', updateMaestro);
 router.put('/maestros/:id', updateEstatusMaestro);
+
+router.get('/maestros/estudiantes/:id', getEstudiantesByIdmaestro);
+router.get('/maestros/tareas/:id', getTareasByIdmaestro);
 
 module.exports = router;

@@ -220,6 +220,31 @@ const updateEstatusMaestro = async (req, res) => {
     }
 }
 
+// consultas externas
+
+const getEstudiantesByIdmaestro = async (req, res) => {
+    try {
+        const id_maestro = req.params.id;
+        const response = await db.query('SELECT * FROM estudiante WHERE id_maestro = $1 ORDER BY apellidos, nombre ASC', [id_maestro]);
+        res.status(200).json(response.rows);
+    } catch (error) {
+        res.status(500).json({
+            message: "Problemas al procesar la solicitud. Por favor intentelo más tarde."
+        });
+    }
+}
+
+const getTareasByIdmaestro = async (req, res) => {
+    try {
+        const id_maestro = req.params.id;
+        const response = await db.query('SELECT * FROM tarea WHERE id_maestro = $1 ORDER BY fecha_creacion DESC', [id_maestro]);
+        res.status(200).json(response.rows);
+    } catch (error) {
+        res.status(500).json({
+            message: "Problemas al procesar la solicitud. Por favor intentelo más tarde."
+        });
+    }
+}
 
 // Validaciones 
 const validarExisteCorreo = async (correo) => {
@@ -257,5 +282,7 @@ module.exports = {
     createMaestro,
     deleteMaestro,
     updateMaestro,
-    updateEstatusMaestro
+    updateEstatusMaestro,
+    getEstudiantesByIdmaestro,
+    getTareasByIdmaestro
 }

@@ -47,6 +47,10 @@ INSERT INTO estudiante (
     nombre, apellidos , correo, contrasena, facultad, experiencia_educativa, rol, estatus, estatus_boolean, id_maestro)
 	values ('Sara Gisel', 'Alba', 'sara@gmail.com', '123456', 'FEI', 'Sistemas web', 'Estudiante', 'Activo', true, 2);
 
+INSERT INTO estudiante (
+    nombre, apellidos , correo, contrasena, facultad, experiencia_educativa, rol, estatus, estatus_boolean, id_maestro)
+	values ('Rafael', 'Molina', 'rofam@gmail.com', 'rafammm', 'FEI', 'Sistemas web', 'Estudiante', 'Activo', true, 2);
+
 SELECT e.nombre, e.apellidos, e.estatus, m.id_maestro
 FROM estudiante e, maestro m
 WHERE e.id_maestro &  m.id_maestro =  1;
