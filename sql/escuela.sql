@@ -99,3 +99,7 @@ INSERT INTO tarea_estudiante (
 SELECT e.nombre , t.nombre, te.mensaje
 FROM estudiante e, tarea_estudiante te, tarea t
 where e.id_estudiante = te.id_estudiante AND t.id_tarea = te.id_tarea AND t.id_tarea = 2;
+
+SELECT e.nombre, e.apellidos, t.nombre, te.mensaje, te.fecha_entrega , te.estatus_entrega
+FROM estudiante e, tarea_estudiante te, tarea t
+where e.id_estudiante = te.id_estudiante AND t.id_tarea = te.id_tarea AND t.id_tarea = 2;

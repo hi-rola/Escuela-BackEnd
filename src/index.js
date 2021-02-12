@@ -16,6 +16,7 @@ app.use(express.urlencoded({
 app.use('/api', require('./routes/maestro.route'));
 app.use('/api', require('./routes/estudiante.route'));
 app.use('/api', require('./routes/tarea.route'));
+app.use('/api', require('./routes/tarea_estudiante.route'));
 
 const server = async () => {
     try {
