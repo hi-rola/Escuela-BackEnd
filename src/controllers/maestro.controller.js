@@ -220,8 +220,36 @@ const updateEstatusMaestro = async (req, res) => {
     }
 }
 
-// consultas externas
+const loginMaestro = async (req, res) => {
+    try {
+        const {
+            correo,
+            contrasena
+        } = req.body;
 
+        const login = await validarLogin(correo, contrasena);
+
+        if (login === true) {
+            const response = await db.query('SELECT nombre, apellidos FROM maestro WHERE correo = $1', [correo]);
+            res.status(200).json({
+                user: response.rows
+            });
+
+        } else {
+            res.json({
+                message: 'Correo y/o contrasena invalidos'
+            });
+        }
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Problemas al procesar la solicitud. Por favor intentelo más tarde."
+        });
+    }
+}
+
+
+// consultas externas
 const getEstudiantesByIdmaestro = async (req, res) => {
     try {
         const id_maestro = req.params.id;
@@ -276,6 +304,43 @@ const encriptarContrasena = async (constrasena, saltRounds = 10) => {
     return null;
 }
 
+const validarLogin = async (correoN, contrasenaN) => {
+    try {
+        const response = await db.query('SELECT correo, contrasena FROM maestro WHERE ' +
+            'correo = $1', [correoN]);
+
+        let existe = false;
+
+        const {
+            correo,
+            contrasena
+        } = response.rows[0];
+
+        if (response.rowCount === 1) {
+            const contrasenaValida = await compararContrasena(contrasenaN, contrasena);
+            if (correo === correoN && contrasenaValida === true) {
+                existe = true;
+            }
+        } else {
+            existe = false;
+        }
+
+        return existe;
+
+    } catch (error) {
+        return error;
+    }
+}
+
+const compararContrasena = async (contrasenaN, hash) => {
+    try {
+        return await bcrypt.compare(contrasenaN, hash);
+    } catch (error) {
+        return false;
+    }
+    return false;
+}
+
 module.exports = {
     getMaestros,
     getMaestroByID,
@@ -284,5 +349,6 @@ module.exports = {
     updateMaestro,
     updateEstatusMaestro,
     getEstudiantesByIdmaestro,
-    getTareasByIdmaestro
+    getTareasByIdmaestro,
+    loginMaestro
 }

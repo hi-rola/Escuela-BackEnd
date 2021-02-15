@@ -12,8 +12,12 @@ const {
     updateMaestro,
     updateEstatusMaestro,
     getEstudiantesByIdmaestro,
-    getTareasByIdmaestro
+    getTareasByIdmaestro,
+    loginMaestro
 } = require('../controllers/Maestro.controller');
+
+// login
+router.post('/maestros/login', loginMaestro);
 
 router.get('/maestros', getMaestros);
 router.get('/maestros/:id', getMaestroByID);
